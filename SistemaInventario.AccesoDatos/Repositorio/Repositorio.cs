@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SistemaInventario.AccesoDatos.Data;
+using SistemaInventario.AccesoDatos.Repositorio.IRepositorio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SistemaInventario.AccesoDatos.Repositorio.IRepositorio
+namespace SistemaInventario.AccesoDatos.Repositorio
 {
     public class Repositorio<T> : IRepositorio<T> where T : class
     {
@@ -17,7 +18,7 @@ namespace SistemaInventario.AccesoDatos.Repositorio.IRepositorio
         public Repositorio(ApplicationDbContext db)
         {
             _db = db;
-            this.dbSet = _db.Set<T>();
+            dbSet = _db.Set<T>();
         }
 
         public async Task Agregar(T entidad)
@@ -39,7 +40,7 @@ namespace SistemaInventario.AccesoDatos.Repositorio.IRepositorio
             }
             if (incluirPropiedades != null)
             {
-                foreach (var incluirProp in incluirPropiedades.Split(new char[] { ','}, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var incluirProp in incluirPropiedades.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
                     query = query.Include(incluirProp);
                 }
